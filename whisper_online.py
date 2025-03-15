@@ -901,6 +901,7 @@ if __name__ == "__main__":
             # No text, so no output
             pass
 
+    chunk_latencies = []
     if args.offline: ## offline mode processing (for testing/debugging)
         a = load_audio(audio_path)
         online.insert_audio_chunk(a)
@@ -956,11 +957,14 @@ if __name__ == "__main__":
             else:
                 output_transcript(o)
             now = time.time() - start
-            logger.debug(f"## last processed {end:.2f} s, now is {now:.2f}, the latency is {now-end:.2f}")
-
+            chunk_latency = f"{now-end:.3f}"
+            logger.debug(f"## last processed {end:.2f} s, now is {now:.2f}, the latency is {chunk_latency}")
+            chunk_latencies.append(chunk_latency)
             if end >= duration:
                 break
         now = None
 
     o = online.finish()
     output_transcript(o, now=now)
+    avg_latency = sum(chunk_latencies) / len(chunk_latencies) if chunk_latencies else 0.0
+    print(f"Average Chunk Inference Latency: {avg_latency:.3f} seconds")
