@@ -957,7 +957,7 @@ if __name__ == "__main__":
             else:
                 output_transcript(o)
             now = time.time() - start
-            chunk_latency = f"{now-end:.3f}"
+            chunk_latency = round(now-end, 3)
             logger.debug(f"## last processed {end:.2f} s, now is {now:.2f}, the latency is {chunk_latency}")
             chunk_latencies.append(chunk_latency)
             if end >= duration:
