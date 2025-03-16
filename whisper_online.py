@@ -967,4 +967,4 @@ if __name__ == "__main__":
     o = online.finish()
     output_transcript(o, now=now)
     avg_latency = sum(chunk_latencies) / len(chunk_latencies) if chunk_latencies else 0.0
-    print(f"Average Chunk Inference Latency: {avg_latency:.3f} seconds")
+    logger.info(f"Average Chunk Inference Latency: {avg_latency:.3f} seconds")
